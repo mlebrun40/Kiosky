@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Commande - Kiosque </title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Bowlby+One+SC&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"  />
+  <style>
+    body { 
+      font-family: 'Bowlby One SC', sans-serif;
+      background-color: #0b46bd;
+      text-shadow: 2px 2px 2px #063594;
+      color: white;
+    }
+    .greek-button {
+      background-color: white;
+      color: #063594;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 5px 5px 0px 0px #063594, 6px 5px 0px 0px rgba(0,0,0,0);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col items-center justify-center px-4 py-6">
+  <!-- Logo et langue -->
+  <div class="w-full max-w-screen-sm text-center items-center mb-10">
+    <div class="text-3xl tracking-wide">"Kiosky"</div>
+  </div>
+<br><br><br>
+  <!-- Titre -->
+  <h1 class="text-2xl md:text-3xl text-center mb-8">Vous êtes client ?</h1>
+
+  <!-- Boutons -->
+  <div class="grid grid-cols-2 sm:grid-cols-2 gap-6">
+    <!-- Sur place -->
+    <button class="greek-button rounded-2xl p-6 flex flex-col items-center" id="accepted-auth">
+          <i class="fas fa-user text-4xl mb-4"></i>
+      Oui je scan ma carte de fidélité
+    </button>
+
+    <!-- À emporter -->
+    <button class="greek-button rounded-2xl p-6 flex flex-col items-center" id="passed-auth">
+      <i class="fas fa-user-slash text-4xl mb-4"></i>
+      Non je commande occasionnellement
+    </button>
+  </div>
+</body>
+
+</html>
+<script>
+    // Sélectionner tous les boutons
+    const buttons = document.querySelectorAll('.greek-button');
+    
+    // Ajouter un écouteur d'événement pour chaque bouton
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+        // Rediriger vers la page de commande
+        if (button.id === 'accepted-auth') {
+          window.location.href = 'ask-barcode.html';
+          localStorage.setItem('auth', true);
+        } else {
+          window.location.href = 'order.html';
+          localStorage.setItem('auth', false);
+        }
+        });
+    });
+</script>

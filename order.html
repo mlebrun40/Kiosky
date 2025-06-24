@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kiosky</title>
+  <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+
+</head>
+<body>
+  <div class="cart" style ="display: none;" id="cartContainer">
+    
+    <div class="cart-header">
+      <h2>Votre panier</h2>
+      <button id="clear-cart" class="greek-button">Vider le panier</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <!-- Les articles du panier seront insérés ici -->
+    </div>
+    <div class="cart-footer">
+      <span>Total: <span id="totalAmount">0.00</span></span>
+      <button id="checkout" class="greek-button">Commander</button>
+    </div>
+  </div>
+  <div class="container">
+    <aside class="sidebar">
+      <div class="logo">Kiosk</div>
+      <ul class="menu">
+        <li class="menu-item active" data-category="pizza">
+          <i class="fas fa-pizza-slice"></i>
+          <span>Pizza</span>
+        </li>
+        <li class="menu-item" data-category="desserts">
+          <i class="fas fa-cookie"></i>
+          <span>Desserts</span>
+        </li>
+        <li class="menu-item" data-category="burgers">
+          <i class="fas fa-hamburger"></i>
+          <span>Burgers</span>
+        </li>
+        <li class="menu-item" data-category="boissons">
+          <i class="fas fa-cocktail"></i>
+          <span>Boissons</span>
+        </li>
+        <li class="menu-item" data-category="glaces">
+          <i class="fas fa-ice-cream"></i>
+          <span>Glaçes</span>
+        </li>
+        <!-- info allergènes-->
+        <li class="menu-item" data-category="allergenes">
+          <i class="fas fa-exclamation-triangle"></i>
+          <span>Info allergènes</span>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main">
+      <div class="header">
+        <h1>bonne appétit !</h1>
+        <div class="icons">
+          <i style="color: #063594;" class="fas fa-shopping-cart icon" id="cart"></i><span>Total: <span id="total-amount"></span></span>
+          <i style="color: #063594;" class="fas fa-sign-out-alt icon" id="logout"></i>
+          
+        </div>
+      </div>
+
+      <div class="grid" id="menuGrid">
+        <!-- Content inserted dynamically -->
+      </div>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    if (localStorage.getItem('username')) {
+      document.querySelector('.header h1').textContent = `Bonne appétit ${localStorage.getItem('username')} !`;
+    } else {
+      document.querySelector('.header h1').textContent = 'Bonne appétit !';
+    }
+
+    document.getElementById('logout').addEventListener('click', () => {
+      //remove all user data from localStorage
+      localStorage.removeItem('username');
+      localStorage.removeItem('auth');
+      localStorage.removeItem('cart');
+      localStorage.removeItem('cartItems');
+      localStorage.removeItem('totalAmount');
+      localStorage.removeItem('option');
+
+
+      window.location.href = '/kiosky/index.html'; // Redirection vers la page d'accueil
+    });
+  </script>
+</body>
+</html>

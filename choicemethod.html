@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Commande - Récapitulatif</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Bowlby+One+SC&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"  />
+  <style>
+    body { 
+      font-family: 'Bowlby One SC', sans-serif;
+      background-color: #0b46bd;
+      text-shadow: 2px 2px 2px #063594;
+      color: white;
+    }
+    .greek-button {
+      background-color: white;
+      color: #063594;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 5px 5px 0px 0px #063594, 6px 5px 0px 0px rgba(0,0,0,0);
+    }
+    span {
+      font-size: 1.2rem;
+        color: #063594;
+        
+      text-shadow: none;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col items-center justify-center px-4 py-6">
+  <!-- Logo et langue -->
+  <div class="w-full max-w-screen-sm text-center items-center mb-10">
+    <div class="text-3xl tracking-wide">Paiement</div> 
+  </div>
+<br>
+  <!-- Titre -->
+  <h1 class="text-2xl md:text-3xl text-center mb-8">Comment souhaiter vous payez: </h1>
+
+    <!-- Liste des articles -->
+  <!-- Boutons -->
+  <div class="grid grid-cols-3 sm:grid-cols-3 gap-6">
+    <!-- Sur place -->
+     
+    <button class="greek-button rounded-2xl p-6 flex flex-col items-center" id="creditCard">
+    <!-- font awesome icons-->
+      <i class="fas fa-credit-card fa-2x mb-2"></i>
+      Payer par carte bancaire
+    </button>
+    <button class="greek-button rounded-2xl p-6 flex flex-col items-center" id="money-bill">
+      <i class="fas fa-money-bill-wave fa-2x mb-2"></i>
+      Payer en espèces
+    </button>
+    <button class="greek-button rounded-2xl p-6 flex flex-col items-center" id="return">
+      <i class="fas fa-arrow-left fa-2x mb-2"></i>
+      Retour
+    </button>
+    
+
+  </div>
+</body>
+
+</html>
+<script>
+function getCookie(name) {
+  return document.cookie.split('; ').reduce((acc, val) => {
+    const parts = val.split('=');
+    return parts[0] === name ? decodeURIComponent(parts[1]) : acc;
+  }, '');
+}
+
+function afficherRecapCommande() {
+  const recapList = document.getElementById("recapItems");
+  const totalSpan = document.getElementById("recapTotal");
+  const cookie = getCookie("cart");
+
+  if (!cookie) {
+    recapList.innerHTML = "<li>Votre panier est vide.</li>";
+    totalSpan.textContent = "0,00 €";
+    return;
+  }
+
+  const cart = JSON.parse(cookie);
+  let total = 0;
+  recapList.innerHTML = "";
+
+  cart.forEach(item => {
+    const line = document.createElement("li");
+    const itemTotal = item.unitPrice * item.quantity;
+    total += itemTotal;
+
+    line.className = "flex justify-between items-center";
+    line.innerHTML = `
+      <span>${item.quantity} × ${item.name}</span>
+      <span>${itemTotal.toFixed(2).replace('.', ',')} €</span>
+    `;
+    recapList.appendChild(line);
+  });
+
+  totalSpan.textContent = total.toFixed(2).replace('.', ',') + " €";
+}
+
+document.addEventListener("DOMContentLoaded", afficherRecapCommande);
+
+    // Sélectionner tous les boutons
+    const buttons = document.querySelectorAll('.greek-button');
+    // Ajouter un écouteur d'événement pour chaque bouton
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Rediriger vers la page de commande
+            if (button.id === 'return') {
+                window.location.href = 'cart.html';
+            } else if (button.id === 'money-bill') {
+
+          window.location.href = 'successful.html';
+          localStorage.setItem('money', 'money-bill');
+            
+            } else if (button.id === 'creditCard') {
+              
+          localStorage.setItem('money', 'creditCard');
+          window.location.href = 'successful.html';
+
+            }
+        
+    });
+  });
+</script>

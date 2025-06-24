@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Commande - Confirmation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500&family=Bowlby+One+SC&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"  />
+  <style>
+    body { 
+      font-family: 'Bowlby One SC', sans-serif;
+      background-color: #0b46bd;
+      text-shadow: 2px 2px 2px #063594;
+      color: white;
+    }
+    .greek-button {
+      background-color: white;
+      color: #063594;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 5px 5px 0px 0px #063594, 6px 5px 0px 0px rgba(0,0,0,0);
+    }
+    span {
+      font-size: 1.2rem;
+        color: #063594;
+        
+      text-shadow: none;
+    }
+  </style>
+</head>
+
+<body class="min-h-screen flex flex-col items-center justify-center px-4 py-6">
+  <!-- Logo et langue -->
+  <div class="w-full max-w-screen-sm text-center items-center mb-10">
+    <div class="text-3xl tracking-wide">Superbe votre commande est passé !</div> 
+  </div>
+<br>
+  <!-- Titre -->
+  <h1 class="text-2xl md:text-3xl text-center mb-8">Récapitulatif </h1>
+
+    <!-- Liste des articles -->
+  <!-- Boutons -->
+  <div class="grid grid-cols-3 sm:grid-cols-3 gap-6">
+    <!-- Sur place -->
+     
+    <button class="greek-button rounded-2xl p-6 flex flex-col items-center">
+    <!-- font number icons-->
+      <i class="fas fa-receipt fa-2x mb-2"></i>
+      Commande: <span id="numbercommande"></span>
+    </button>
+    <button class="greek-button rounded-2xl p-6 flex flex-col items-center" >
+      <i class="fas fa-money-bill-wave fa-2x mb-2"></i>
+      Paiement: <span id="money"></span>
+    </button>
+    <button class="greek-button rounded-2xl p-6 flex flex-col items-center" >
+    <i class="fas fa-utensils fa-2x mb-2"></i>
+      Type: <span id="type"></span>
+    </button>
+    
+
+  </div>
+</body>
+
+</html>
+<script>
+function getCookie(name) {
+  return document.cookie.split('; ').reduce((acc, val) => {
+    const parts = val.split('=');
+    return parts[0] === name ? decodeURIComponent(parts[1]) : acc;
+  }, '');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  
+   money = getCookie('money');
+  if (money =="money-bill") {
+    finalmoney = "Espèces";
+  } else if (money == "creditCard") {
+    finalmoney = "Carte bancaire";
+  } else {
+    finalmoney = "Inconnu";
+  }
+
+   type = getCookie('option');
+
+  numbercommande = getCookie('numbercommande');
+  //id=random aléatoire de 6 chiffres
+  if (!numbercommande) {
+    const randomId = Math.floor(Math.random() * 900000 + 100000); // Génère un nombre aléatoire entre 100000 et 999999
+    document.cookie = `numbercommande=${randomId}; path=/;`;
+  }
+
+  const option = type === "in-person" ? "Sur place" : "À emporter";
+
+  if (money === "Espèces") {
+    numcommande = "ESP-" + numbercommande;
+  }
+  else if (money === "Carte bancaire") {
+    numcommande = "CB-" + numbercommande;
+  } else {
+    numcommande = "UKN-" + numbercommande;
+  }
+
+  document.getElementById('numbercommande').textContent = numcommande;
+  document.getElementById('money').textContent = finalmoney;
+  document.getElementById('type').textContent = option;
+});
+</script>
