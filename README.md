@@ -196,8 +196,4 @@ This project is protected under the GNU GENERAL PUBLIC LICENSE. For more details
 
 ---
 
-##  Acknowledgments
-
-- List any resources, contributors, inspiration, etc. here.
-
 ---
